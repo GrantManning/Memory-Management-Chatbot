@@ -21,7 +21,7 @@ bool ChatBotApp::OnInit()
     // create window with name and show it
     ChatBotFrame *chatBotFrame = new ChatBotFrame(wxT("Udacity ChatBot"));
     chatBotFrame->Show(true);
-
+  
     return true;
 }
 
@@ -48,6 +48,18 @@ ChatBotFrame::ChatBotFrame(const wxString &title) : wxFrame(NULL, wxID_ANY, titl
 
     // position window in screen center
     this->Centre();
+}
+
+ChatBotFrame::~ChatBotFrame()
+{
+  if (_panelDialog != NULL)
+  {
+    delete _panelDialog;
+  }
+  if (_userTextCtrl != NULL)
+  {
+    delete _userTextCtrl;
+  }
 }
 
 void ChatBotFrame::OnEnter(wxCommandEvent &WXUNUSED(event))
@@ -105,7 +117,7 @@ EVT_PAINT(ChatBotPanelDialog::paintEvent) // catch paint events
 END_EVENT_TABLE()
 
 ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
-    : wxScrolledWindow(parent, id)
+    : wxScrolledWindow(parent, id), _chatLogic(new ChatLogic())
 {
     // sizer will take care of determining the needed scroll size
     _dialogSizer = new wxBoxSizer(wxVERTICAL);
@@ -116,9 +128,6 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
 
     //// STUDENT CODE
     ////
-
-    // create chat logic instance
-    _chatLogic = new ChatLogic(); 
 
     // pass pointer to chatbot dialog so answers can be displayed in GUI
     _chatLogic->SetPanelDialogHandle(this);
@@ -134,9 +143,8 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
 {
     //// STUDENT CODE
     ////
-
-    delete _chatLogic;
-
+  	//delete now handled by smartpointer
+    //delete _chatLogic;
     ////
     //// EOF STUDENT CODE
 }
