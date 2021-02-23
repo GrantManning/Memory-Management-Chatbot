@@ -5,23 +5,18 @@
 #include <string>
 #include <memory>
 #include "chatgui.h"
+#include "graphnode.h"
 
 // forward declarations
 class ChatBot;
 class GraphEdge;
-class GraphNode;
 
 class ChatLogic
 {
 private:
-    //// STUDENT CODE
-    ////
     // data handles (owned)
     std::vector<std::unique_ptr<GraphNode>> _nodes;
     std::vector<GraphEdge*> _edges;
-
-    ////
-    //// EOF STUDENT CODE
 
     // data handles (not owned)
     GraphNode *_currentNode;
@@ -36,10 +31,10 @@ private:
     void AddAllTokensToElement(std::string tokenID, tokenlist &tokens, T &element);
 
 public:
-    // constructor / destructor
-    ChatLogic();
-    ~ChatLogic();
 
+    //destructor
+    ~ChatLogic();
+    
     // getter / setter
     void SetPanelDialogHandle(ChatBotPanelDialog *panelDialog);
     void SetChatbotHandle(ChatBot &chatbot);
